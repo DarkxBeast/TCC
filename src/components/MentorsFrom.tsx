@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -8,7 +8,7 @@ export default function MentorFrom() {
   const sectionRef = useRef(null);
   const [duplicatedCompanies, setDuplicatedCompanies] = useState<Array<{name: string, logo: string}>>([]);
 
-  const mentors = [
+  const mentors = useMemo(() => [
     { name: "Mentor_From_1", logo: "/images/mentor_scroller/MS1.png" },
     { name: "Mentor_From_2", logo: "/images/mentor_scroller/MS2.png" },
     { name: "Mentor_From_3", logo: "/images/mentor_scroller/MS3.png" },
@@ -16,12 +16,12 @@ export default function MentorFrom() {
     { name: "Mentor_From_5", logo: "/images/mentor_scroller/MS5.png" },
     { name: "Mentor_From_6", logo: "/images/mentor_scroller/MS6.png" }, 
     { name: "Mentor_From_7", logo: "/images/mentor_scroller/MS7.png" },
-  ];
+  ], []);
 
   useEffect(() => {
     // Duplicate the array to create a seamless infinite scroll effect
     setDuplicatedCompanies([...mentors, ...mentors]);
-  }, []);
+  }, [mentors]);
 
   const titleVariants = {
     hidden: { y: 20, opacity: 0 },

@@ -24,6 +24,8 @@ export default function ServiceShowcase() {
     } else {
       videoRef.current.play().catch(error => {
         console.log("Play was prevented:", error);
+        // If autoplay is prevented, we should update our state to match reality
+        setIsVideoPlaying(false);
       });
     }
     
@@ -68,7 +70,7 @@ export default function ServiceShowcase() {
       video.removeEventListener('loadedmetadata', updateDuration);
       video.removeEventListener('durationchange', updateDuration);
     };
-  }, [activeCategory]);
+  }, [activeCategory, videoRef]);
 
   // Animation variants
   const containerVariants = {
@@ -794,12 +796,10 @@ export default function ServiceShowcase() {
                     max={videoDuration || 0}
                     value={videoCurrentTime}
                     onChange={handleVideoSeek}
-                    className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-[#FF9E44]"
+                    className="video-seekbar"
                     aria-label="Video progress"
                     style={{
-                      backgroundSize: `${(videoCurrentTime / (videoDuration || 1)) * 100}% 100%`,
-                      backgroundImage: 'linear-gradient(#FF9E44, #FF9E44)',
-                      backgroundRepeat: 'no-repeat'
+                      backgroundSize: `${(videoCurrentTime / (videoDuration || 1)) * 100}% 100%`
                     }}
                   />
                   

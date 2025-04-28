@@ -24,6 +24,8 @@ export default function AboutUs() {
     } else {
       videoRef.current.play().catch(error => {
         console.log("Play was prevented:", error);
+        // If autoplay is prevented, we should update our state to match reality
+        setIsPlaying(false);
       });
     }
     
@@ -60,7 +62,7 @@ export default function AboutUs() {
       video.removeEventListener('loadedmetadata', updateDuration);
       video.removeEventListener('durationchange', updateDuration);
     };
-  }, []);
+  }, [videoRef]);
 
   // Handle seekbar interaction
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,12 +172,10 @@ export default function AboutUs() {
                 max={duration || 0}
                 value={currentTime}
                 onChange={handleSeek}
-                className="w-full h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer accent-[#FF9E44]"
+                className="video-seekbar"
                 aria-label="Video progress"
                 style={{
-                  backgroundSize: `${(currentTime / (duration || 1)) * 100}% 100%`,
-                  backgroundImage: 'linear-gradient(#FF9E44, #FF9E44)',
-                  backgroundRepeat: 'no-repeat'
+                  backgroundSize: `${(currentTime / (duration || 1)) * 100}% 100%`
                 }}
               />
               

@@ -295,8 +295,11 @@ export default function Hero({ setFormSource }: HeroProps) {
           fill
           className="object-contain"
           onError={(e) => {
+            console.log(`Failed to load image for card: ${card.title}`);
             const target = e.target as HTMLImageElement;
             target.src = "/placeholder.jpg";
+            // Prevent potential infinite error loops if placeholder also fails
+            target.onerror = null;
           }}
         />
       </div>
@@ -382,6 +385,7 @@ export default function Hero({ setFormSource }: HeroProps) {
             <div className="flex justify-center pt-4 md:pt-8 pb-2 md:pb-6 relative">
               <div className="flex flex-row w-full md:w-auto px-2 sm:px-4 space-y-0 space-x-2 md:space-x-12 items-end justify-start md:justify-center overflow-x-auto snap-x scrollbar-hide">
                 <button
+                  type="button"
                   className={`text-sm md:text-lg font-medium px-2 sm:px-3 md:px-6 py-2 md:py-3 transition-colors relative flex-shrink-0 snap-start min-w-[145px] sm:min-w-0 ${activeTab === "Students"
                     ? "text-[#FF9E44]"
                     : "text-[#666666] hover:text-[#333333]"
@@ -396,6 +400,7 @@ export default function Hero({ setFormSource }: HeroProps) {
                   </span>
                 </button>
                 <button
+                  type="button"
                   className={`text-sm md:text-lg font-medium px-2 sm:px-3 md:px-6 py-2 md:py-3 transition-colors relative flex-shrink-0 snap-start min-w-[120px] sm:min-w-0 ${activeTab === "Institutions"
                     ? "text-[#FF9E44]"
                     : "text-[#666666] hover:text-[#333333]"
@@ -410,6 +415,7 @@ export default function Hero({ setFormSource }: HeroProps) {
                   </span>
                 </button>
                 <button
+                  type="button"
                   className={`text-sm md:text-lg font-medium px-2 sm:px-3 md:px-6 py-2 md:py-3 transition-colors relative flex-shrink-0 snap-start min-w-[120px] sm:min-w-0 ${activeTab === "Companies"
                     ? "text-[#FF9E44]"
                     : "text-[#666666] hover:text-[#333333]"
@@ -505,7 +511,9 @@ export default function Hero({ setFormSource }: HeroProps) {
               {/* Buttons */}
               {activeTab === "Students" && (
                 <div className="mt-2 mb-4 md:mb-6">
-                  <button className="bg-[#FF9E44] text-black text-sm md:text-base font-semibold py-2 md:py-3 px-6 md:px-8 rounded-full shadow-md hover:bg-[#ff9431] transition-colors"
+                  <button
+                    type="button"
+                    className="bg-[#FF9E44] text-black text-sm md:text-base font-semibold py-2 md:py-3 px-6 md:px-8 rounded-full shadow-md hover:bg-[#ff9431] transition-colors"
                     onClick={handleModalOpen}
                   >
                     Join our waitlist
@@ -539,6 +547,7 @@ export default function Hero({ setFormSource }: HeroProps) {
               {(activeTab === "Institutions" || activeTab === "Companies") && (
                 <div className="mt-2 mb-4 md:mb-6">
                   <button
+                    type="button"
                     className="bg-[#FF9E44] text-black text-sm md:text-base font-semibold py-2 md:py-3 px-6 md:px-8 rounded-full shadow-md hover:bg-[#ff9431] transition-colors"
                     onClick={() => {
                       const contactSection = document.getElementById("contact-us");

@@ -19,7 +19,7 @@ export default function TermsPage() {
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">1. Acceptance of Terms</h2>
-          <p>By accessing and using The Career Company's services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services.</p>
+          <p>By accessing and using The Career Company&apos;s services, you acknowledge that you have read, understood, and agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our services.</p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">2. Description of Services</h2>
           <p>The Career Company provides career mentoring, guidance, and connection services between mentors and mentees. Our platform facilitates these connections but does not guarantee specific outcomes or results from mentorship relationships.</p>

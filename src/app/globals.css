@@ -155,3 +155,22 @@
     @apply bg-[#FF9E44] hover:bg-[#ff9431] text-black font-semibold py-3 px-8 rounded-full;
   }
 }
+
+/* Video seekbar styling */
+.video-seekbar {
+  width: 100%;
+  height: 8px;
+  background-color: #4b5563; /* gray-600 */
+  border-radius: 0.5rem;
+  appearance: none;
+  cursor: pointer;
+  accent-color: #FF9E44;
+}
+
+.video-seekbar::-webkit-slider-runnable-track {
+  background: linear-gradient(#FF9E44, #FF9E44) no-repeat;
+}
+
+.video-seekbar::-webkit-slider-thumb {
+  appearance: none;
+}

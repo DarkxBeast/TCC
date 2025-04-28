@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -8,7 +8,7 @@ export default function TrustedBy() {
   const sectionRef = useRef(null);
   const [duplicatedCompanies, setDuplicatedCompanies] = useState<Array<{name: string, logo: string}>>([]);
 
-  const companies = [
+  const companies = useMemo(() => [
     { name: "Google", logo: "/images/institutes/trusted-by-1.webp" },
     { name: "Microsoft", logo: "/images/institutes/trusted-by-2.webp" },
     { name: "Amazon", logo: "/images/institutes/trusted-by-3.webp" },
@@ -16,12 +16,12 @@ export default function TrustedBy() {
     { name: "Apple", logo: "/images/institutes/trusted-by-5.webp" },
     { name: "Netflix", logo: "/images/institutes/trusted-by-6.webp" },
     { name: "Netflix", logo: "/images/institutes/trusted-by-7.webp" },
-  ];
+  ], []);
 
   useEffect(() => {
     // Duplicate the array to create a seamless infinite scroll effect
     setDuplicatedCompanies([...companies, ...companies]);
-  }, []);
+  }, [companies]);
 
   const titleVariants = {
     hidden: { y: 20, opacity: 0 },
