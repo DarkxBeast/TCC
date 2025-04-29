@@ -4,11 +4,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import FormPopup from "./ui/form-popup";
 
 export default function ServiceShowcase() {
-  // State to track active category
   const [activeCategory, setActiveCategory] = useState('mentorship');
-  // State for resume video
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [videoCurrentTime, setVideoCurrentTime] = useState(0);
@@ -42,9 +42,10 @@ export default function ServiceShowcase() {
   // Handle seekbar interaction
   const handleVideoSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!videoRef.current) return;
-    const seekTime = parseFloat(e.target.value);
-    videoRef.current.currentTime = seekTime;
-    setVideoCurrentTime(seekTime);
+    const video = videoRef.current;
+    const time = parseFloat(e.target.value);
+    video.currentTime = time;
+    setVideoCurrentTime(time);
   };
 
   // Update video time state when video time changes
@@ -59,18 +60,21 @@ export default function ServiceShowcase() {
       }
     };
 
-    // Set up event listeners
     video.addEventListener('timeupdate', updateTime);
     video.addEventListener('loadedmetadata', updateDuration);
     video.addEventListener('durationchange', updateDuration);
 
+    // Initialize duration when component mounts
+    if (video.duration && !isNaN(video.duration)) {
+      setVideoDuration(video.duration);
+    }
+
     return () => {
-      // Clean up event listeners
       video.removeEventListener('timeupdate', updateTime);
       video.removeEventListener('loadedmetadata', updateDuration);
       video.removeEventListener('durationchange', updateDuration);
     };
-  }, [activeCategory, videoRef]);
+  }, [activeCategory]);
 
   // Animation variants
   const containerVariants = {
@@ -110,42 +114,42 @@ export default function ServiceShowcase() {
       title: "Foundations of Digital Marketing and E-commerce",
       duration: "1-4 Weeks",
       provider: "Beginner",
-      icon: "/images/icons/S1.png"
+      icon: "/images/icons/Harvard.png"
     },
     {
       id: 2,
       title: "Google IT Automation with Python",
       duration: "Beginner",
       provider: "3-6 Months",
-      icon: "/images/icons/S2.png"
+      icon: "/images/icons/Google.png"
     },
     {
       id: 3,
       title: "Project Execution : Running the Project",
       duration: "Beginer",
       provider: "1-3 Months",
-      icon: "/images/icons/S3.png"
+      icon: "/images/icons/Ibm.png"
     },
     {
       id: 4,
       title: "Google Advanced Data Analytics",
       duration: "Advanced",
       provider: "3-6 Months",
-      icon: "/images/icons/S4.png"
+      icon: "/images/icons/Google.png"
     },
     {
       id: 5,
       title: "Entrepreneurship & Innovation in Business",
       duration: "2 Hrs",
       provider: "ISB Hyderabad",
-      icon: "/images/icons/S5.png"
+      icon: "/images/icons/Harvard.png"
     },
     {
       id: 6,
       title: "Foundations of Project Management",
       duration: "1-4 Weeks",
       provider: "Beginner",
-      icon: "/images/icons/S6.png"
+      icon: "/images/icons/Ibm.png"
     }
   ];
 
@@ -195,21 +199,21 @@ export default function ServiceShowcase() {
       title: "Book Your 1:1 Resume Review",
       description: "Get expert feedback on your resume and improve your chances of landing interviews.",
       image: "/images/mentorship/MN1.png",
-      link: "https://cdm.thecareercompany.in/products/Resume-review-11-66d97ac37345de4e9c1d8b67?dgps_s=pbl&dgps_u=c&dgps_uid=667fb37d1f54461317e7b8b6&dgps_t=cp_m"
+      link: "https://cdm.thecareercompany.in/products/Resume-review-11-66d97ac37345de4e9c1d8b67?dgps_s=pbl&dgps_u=c&dgps_uid=667fb37d1f54461317e7b8b67&dgps_t=cp_m"
     },
     {
       id: 2,
       title: "Book your 1:1 Career Roadmap",
       description: "Plan your career path with guidance from industry professionals.",
       image: "/images/mentorship/MN2.png",
-      link: "https://cdm.thecareercompany.in/products/Book-your-11-for-resume-review-66d83ac97345de4e9c1d8b43?dgps_s=pbl&dgps_u=c&dgps_uid=667fb37d1f54461317e7b8b6&dgps_t=cp_m"
+      link: "https://cdm.thecareercompany.in/products/Book-your-11-for-resume-review-66d83ac97345de4e9c1d8b43?dgps_s=pbl&dgps_u=c&dgps_uid=667fb37d1f54461317e7b8b67&dgps_t=cp_m"
     },
     {
       id: 3,
       title: "Book Your 1:1 Practice Interview",
       description: "Prepare for job interviews with mock sessions and valuable feedback.",
       image: "/images/mentorship/MN3.png",
-      link: "https://cdm.thecareercompany.in/products/Practice-Interview-11-66e190e3de2b4e14cef3748d?dgps_s=pbl&dgps_u=c&dgps_uid=667fb37d1f54461317e7b8b6&dgps_t=cp_m"
+      link: "https://cdm.thecareercompany.in/products/Practice-Interview-11-66e190e3de2b4e14cef3748d?dgps_s=pbl&dgps_u=c&dgps_uid=667fb37d1f54461317e7b8b67&dgps_t=cp_m"
     }
   ];
 
@@ -299,7 +303,7 @@ export default function ServiceShowcase() {
       workType: "WFH",
       applicants: "1567 Applicants",
       timeLeft: "4 Days Left",
-      companyLogo: "/images/jobs/J4.png"
+      companyLogo: "/images/jobs/J2.png"
     },
     {
       id: 5,
@@ -357,13 +361,32 @@ export default function ServiceShowcase() {
     setActiveCategory(categoryId);
   };
 
+  const handleJoinWaitlist = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const renderWaitlistButton = () => (
+    <div className="text-center">
+      <button
+        onClick={handleJoinWaitlist}
+        className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
+      >
+        Join our Waitlist
+      </button>
+    </div>
+  );
+
   // Render the active section based on the selected category
   const renderActiveSection = () => {
     console.log('Currently rendering section:', activeCategory);
     
     switch (activeCategory) {
       case 'course':
-  return (
+      return (
           <motion.div variants={itemVariants} className="mb-16">
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-black mb-4">Find Courses</h2>
@@ -371,87 +394,83 @@ export default function ServiceShowcase() {
               Find the right course to match your career goals. Start learning today and unlock your potential</p>
             </div>
 
-            <div className="max-w-6xl mx-auto px-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 mb-10 justify-center">
-              {courses.map((course) => (
-  <div
-    key={course.id}
-    className="relative w-[360px] h-[189px] rounded-lg overflow-hidden group cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105 bg-white border border-gray-100"
-  >
-    <div className="p-4 h-full flex flex-col justify-between">
-      <div className="flex items-start mb-1">
-        {/* Course icon/image */}
-        <div className="relative w-10 h-10 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden">
-          <Image
-            src="/images/google.jpg" // Path to your logo
-            alt="Course Logo"
-            width={40} // Adjust width as needed
-            height={40} // Adjust height as needed
-            className="object-contain"
-          />
-        </div>
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
+                {courses.map((course) => (
+                  <div
+                    key={course.id}
+                    className="h-[200px] md:h-[180px] lg:h-[200px] rounded-lg overflow-hidden group cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105 bg-white border border-gray-100"
+                  >
+                    <div className="p-4 h-full flex flex-col justify-between">
+                      <div className="flex items-start mb-1">
+                        {/* Course icon/image */}
+                        <div className="relative w-10 h-10 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden">
+                          <Image
+                            src={course.icon}
+                            alt="Course Logo"
+                            width={40}
+                            height={40}
+                            className="object-contain"
+                          />
+                        </div>
 
-        {/* Course title and tags */}
-        <div className="ml-4 flex-grow">
-          <h3 className="text-lg font-semibold text-gray-800 mb-1">{course.title}</h3>
-          <div className="flex flex-wrap gap-2">
-            {course.title.toLowerCase().includes('management') && (
-              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Management</span>
-            )}
-            {course.title.toLowerCase().includes('Automation') && (
-              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Automation</span>
-            )}
-            {course.title.toLowerCase().includes('leadership') && (
-              <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Leadership</span>
-            )}
-            {course.title.toLowerCase().includes('analytics') && (
-              <span className="px-3 py-1 bg-green-50 text-green-700 text-xs rounded-full">Analytics</span>
-            )}
-            {course.title.toLowerCase().includes('entrepreneurship') && (
-              <span className="px-3 py-1 bg-orange-50 text-orange-700 text-xs rounded-full">Entrepreneurship</span>
-            )}
-            {course.title.toLowerCase().includes('marketing') && (
-              <span className="px-3 py-1 bg-pink-50 text-pink-700 text-xs rounded-full">Marketing</span>
-            )}
-          </div>
-        </div>
-      </div>
+                        {/* Course title and tags */}
+                        <div className="ml-4 flex-grow">
+                          <h3 className="text-lg font-semibold text-gray-800 mb-1">{course.title}</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {course.title.toLowerCase().includes('management') && (
+                              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Management</span>
+                            )}
+                            {course.title.toLowerCase().includes('python') && (
+                              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Python</span>
+                            )}
+                            {course.title.toLowerCase().includes('Automation') && (
+                              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Automation</span>
+                            )}
+                            {course.title.toLowerCase().includes('leadership') && (
+                              <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Leadership</span>
+                            )}
+                            {course.title.toLowerCase().includes('analytics') && (
+                              <span className="px-3 py-1 bg-green-50 text-green-700 text-xs rounded-full">Analytics</span>
+                            )}
+                            {course.title.toLowerCase().includes('entrepreneurship') && (
+                              <span className="px-3 py-1 bg-orange-50 text-orange-700 text-xs rounded-full">Entrepreneurship</span>
+                            )}
+                            {course.title.toLowerCase().includes('marketing') && (
+                              <span className="px-3 py-1 bg-pink-50 text-pink-700 text-xs rounded-full">Marketing</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
 
-      <div className="flex justify-between items-end mt-auto">
-        {/* Provider name aligned to the left */}
-        <p className="text-sm font-bold text-gray-700">{course.provider}</p>
+                      <div className="flex justify-between items-end mt-auto">
+                        {/* Provider name aligned to the left */}
+                        <p className="text-sm font-bold text-gray-700">{course.provider}</p>
 
-        {/* Duration */}
-        <div className="flex items-center">
-          <Image
-            src="/images/svgs/time.svg"
-            alt="Duration"
-            width={16}
-            height={16}
-            className="mr-2"
-          />
-          <p className="text-sm font-bold text-gray-800">{course.duration}</p>
-        </div>
-      </div>
-    </div>
+                        {/* Duration */}
+                        <div className="flex items-center">
+                          <Image
+                            src="/images/svgs/time.svg"
+                            alt="Duration"
+                            width={16}
+                            height={16}
+                            className="mr-2"
+                          />
+                          <p className="text-sm font-bold text-gray-800">{course.duration}</p>
+                        </div>
+                      </div>
+                    </div>
 
-    {/* Call to action overlay on hover */}
-    <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-      <span className="text-white font-bold">View Course</span>
-    </div>
-  </div>
-))}
-          </div>
-        </div>
-
-            <div className="text-center">
-              <Link 
-                href="https://www.coursera.org/" 
-                className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
-              >
-                Join our Waitlist
-              </Link>
+                    {/* Call to action overlay on hover */}
+                    <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                      <span className="text-white font-bold">View Course</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {renderWaitlistButton()}
           </motion.div>
         );
       
@@ -498,14 +517,7 @@ export default function ServiceShowcase() {
               </div>
             </div>
             
-            <div className="text-center">
-              <Link 
-                href="/mentors" 
-                className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
-              >
-                Join our Waitlist
-              </Link>
-            </div>
+            {renderWaitlistButton()}
           </motion.div>
         );
       
@@ -555,192 +567,171 @@ export default function ServiceShowcase() {
               ))}
             </div>
             
-            <div className="text-center">
-              <Link 
-                href="/find-yourself" 
-                className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
-              >
-                Join our Waitlist
-              </Link>
-            </div>
+            {renderWaitlistButton()}
           </motion.div>
         );
       
-        case 'projects':
-          return (
-            <motion.div variants={itemVariants} className="mb-16">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-black mb-4">Apply for Projects</h2>
-                <p className="text-gray-600 max-w-2xl mx-auto">Gain hands-on experience, build your skills, and work on real-world challenges!</p>
-              </div>
-        
-              <div className="max-w-6xl mx-auto px-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 mb-10 justify-center">
-                  {projects.map((project) => (
-                    <div
-                      key={project.id}
-                      className="relative w-[360px] h-[189px] rounded-lg overflow-hidden group cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105 bg-white border border-gray-100"
-                    >
-                      <div className="p-4 h-full flex flex-col justify-between">
-                        <div className="flex items-start mb-2">
-                          {/* Project icon/image */}
-                          <div className="relative w-10 h-10 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden">
-                            <Image
-                              src={project.icon} // Use the project's icon
-                              alt="Project Icon"
-                              width={40} // Adjust width as needed
-                              height={40} // Adjust height as needed
-                              className="object-contain"
-                            />
-                          </div>
-        
-                          {/* Project title and tags */}
-                          <div className="ml-4 flex-grow">
-                            <h3 className="text-lg font-semibold text-gray-800 mb-1">{project.title}</h3>
-                            <div className="flex flex-wrap gap-2">
-                              {project.title.toLowerCase().includes('optimization') && (
-                                <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Optimization</span>
-                              )}
-                              {project.title.toLowerCase().includes('analytics') && (
-                                <span className="px-3 py-1 bg-green-50 text-green-700 text-xs rounded-full">Analytics</span>
-                              )}
-                              {project.title.toLowerCase().includes('strategy') && (
-                                <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Strategy</span>
-                              )}
-                              {project.title.toLowerCase().includes('automation') && (
-                                <span className="px-3 py-1 bg-orange-50 text-orange-700 text-xs rounded-full">Automation</span>
-                              )}
-                              {project.title.toLowerCase().includes('marketing') && (
-                                <span className="px-3 py-1 bg-pink-50 text-pink-700 text-xs rounded-full">Marketing</span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-        
-                        <div className="flex justify-between items-end mt-auto">
-                          <div className="flex items-center">
-                            <Image
-                              src="/images/svgs/Users.svg"
-                              alt="Users"
-                              width={16}
-                              height={16}
-                              className="mr-2"
-                            />
-                            <p className="text-sm font-bold text-gray-700">{project.people}</p>
-                          </div>
-                          <div className="flex items-center">
-                            <Image
-                              src="/images/svgs/time.svg"
-                              alt="Duration"
-                              width={16}
-                              height={16}
-                              className="mr-2"
-                            />
-                            <p className="text-sm font-bold text-gray-800">{project.duration}</p>
-                          </div>
-                        </div>
-                      </div>
-        
-                      {/* Call to action overlay on hover */}
-                      <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                        <span className="text-white font-bold">View Project</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-        
-              <div className="text-center">
-                <Link
-                  href="/find-projects"
-                  className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
-                >
-                  Join our Waitlist
-                </Link>
-              </div>
-            </motion.div>
-          );
-      
-      case 'jobs':
-        return (
-          <motion.div variants={itemVariants} className="mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-black mb-4">Jobs & Internships</h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">Discover exciting career opportunities and internships to kickstart your professional journey!</p>
-            </div>
-            
-            <div className="max-w-6xl mx-auto px-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
-                {jobs.map((job) => (
-                  <div
-                    key={job.id}
-                    className="w-[320px] h-[290px] bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 mx-auto flex flex-col justify-between border border-gray-100"
-                  >
-                    <div className="flex items-start justify-between space-x-4">
-                      {/* Company Logo */}
-                      <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                        <Image
-                          src={job.companyLogo}
-                          alt={job.company}
-                          width={48}
-                          height={48}
-                          className="w-full h-full object-contain"
-                        />
-                      </div>
+      case 'projects':
+  return (
+    <motion.div variants={itemVariants} className="mb-16">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold text-black mb-4">Apply for Projects</h2>
+        <p className="text-gray-600 max-w-2xl mx-auto">Gain hands-on experience, build your skills, and work on real-world challenges!</p>
+      </div>
 
-                      {/* Job Title and Tags - Moved to right */}
-                      <div className="flex-1 text-right">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{job.title}</h3>
-                        <div className="flex gap-2 justify-end">
-                          <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">{job.location}</span>
-                          <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">{job.workType}</span>
-                        </div>
-                      </div>
-                    </div>
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="h-[200px] md:h-[180px] lg:h-[200px] rounded-lg overflow-hidden group cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105 bg-white border border-gray-100"
+            >
+              <div className="p-4 h-full flex flex-col justify-between">
+                <div className="flex items-start mb-2">
+                  {/* Project icon/image */}
+                  <div className="relative w-10 h-10 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={project.icon}
+                      alt="Project Icon"
+                      width={40}
+                      height={40}
+                      className="object-contain"
+                    />
+                  </div>
 
-                    {/* Stacked Company Details at bottom */}
-                    <div className="flex flex-col space-y-3 mt-auto pt-4">
-                      {/* Company Name */}
-                      <p className="text-sm text-gray-600 font-medium">{job.company}</p>
-                      
-                      {/* Applicants */}
-                      <div className="flex items-center space-x-2">
-                        <Image
-                          src="/images/svgs/Users.svg"
-                          alt="Applicants"
-                          width={16}
-                          height={16}
-                        />
-                        <span className="text-sm text-gray-600">{job.applicants}</span>
-                      </div>
-
-                      {/* Time Left */}
-                      <div className="flex items-center space-x-2">
-                        <Image
-                          src="/images/svgs/time.svg"
-                          alt="Time"
-                          width={16}
-                          height={16}
-                        />
-                        <span className="text-sm text-gray-600">{job.timeLeft}</span>
-                      </div>
+                  {/* Project title and tags */}
+                  <div className="ml-4 flex-grow">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-1">{project.title}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.title.toLowerCase().includes('optimization') && (
+                        <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Optimization</span>
+                      )}
+                      {project.title.toLowerCase().includes('analytics') && (
+                        <span className="px-3 py-1 bg-green-50 text-green-700 text-xs rounded-full">Analytics</span>
+                      )}
+                      {project.title.toLowerCase().includes('strategy') && (
+                        <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Strategy</span>
+                      )}
+                      {project.title.toLowerCase().includes('automation') && (
+                        <span className="px-3 py-1 bg-orange-50 text-orange-700 text-xs rounded-full">Automation</span>
+                      )}
+                      {project.title.toLowerCase().includes('marketing') && (
+                        <span className="px-3 py-1 bg-pink-50 text-pink-700 text-xs rounded-full">Marketing</span>
+                      )}
                     </div>
                   </div>
-                ))}
+                </div>
+
+                <div className="flex justify-between items-end mt-auto">
+                  <div className="flex items-center">
+                    <Image
+                      src="/images/svgs/Users.svg"
+                      alt="Users"
+                      width={16}
+                      height={16}
+                      className="mr-2"
+                    />
+                    <p className="text-sm font-bold text-gray-700">{project.people}</p>
+                  </div>
+                  <div className="flex items-center">
+                    <Image
+                      src="/images/svgs/time.svg"
+                      alt="Duration"
+                      width={16}
+                      height={16}
+                      className="mr-2"
+                    />
+                    <p className="text-sm font-bold text-gray-800">{project.duration}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Call to action overlay on hover */}
+              <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <span className="text-white font-bold">View Project</span>
               </div>
             </div>
-            
-            <div className="text-center">
-              <Link 
-                href="/jobs" 
-                className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
-              >
-                Join our Waitlist
-              </Link>
-            </div>
-          </motion.div>
-        );
+          ))}
+        </div>
+      </div>
+
+      {renderWaitlistButton()}
+    </motion.div>
+  );
+
+      case 'jobs':
+  return (
+    <motion.div variants={itemVariants} className="mb-16">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl font-bold text-black mb-4">Jobs & Internships</h2>
+        <p className="text-gray-600 max-w-2xl mx-auto">Discover exciting career opportunities and internships to kickstart your professional journey!</p>
+      </div>
       
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-10">
+          {jobs.map((job) => (
+            <div
+              key={job.id}
+              className="h-[290px] md:h-[270px] lg:h-[290px] bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between border border-gray-100"
+            >
+              <div className="flex items-start justify-between space-x-4">
+                {/* Company Logo */}
+                <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                  <Image
+                    src={job.companyLogo}
+                    alt={job.company}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                {/* Job Title and Tags - Moved to right */}
+                <div className="flex-1 text-right">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{job.title}</h3>
+                  <div className="flex gap-2 justify-end">
+                    <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">{job.location}</span>
+                    <span className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">{job.workType}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stacked Company Details at bottom */}
+              <div className="flex flex-col space-y-3 mt-auto pt-4">
+                {/* Company Name */}
+                <p className="text-sm text-gray-600 font-medium">{job.company}</p>
+                
+                {/* Applicants */}
+                <div className="flex items-center space-x-2">
+                  <Image
+                    src="/images/svgs/Users.svg"
+                    alt="Applicants"
+                    width={16}
+                    height={16}
+                  />
+                  <span className="text-sm text-gray-600">{job.applicants}</span>
+                </div>
+
+                {/* Time Left */}
+                <div className="flex items-center space-x-2">
+                  <Image
+                    src="/images/svgs/time.svg"
+                    alt="Time"
+                    width={16}
+                    height={16}
+                  />
+                  <span className="text-sm text-gray-600">{job.timeLeft}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {renderWaitlistButton()}
+    </motion.div>
+  );
+
       case 'resume':
         return (
           <motion.div variants={itemVariants} className="mb-16">
@@ -777,7 +768,7 @@ export default function ServiceShowcase() {
                   <div className={`${isVideoPlaying ? 'opacity-0 hover:opacity-100' : 'opacity-100'} transition-opacity duration-300 bg-black/30 w-20 h-20 rounded-full flex items-center justify-center`}>
                     {isVideoPlaying ? (
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-12 h-12">
-                        <path fillRule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z" clipRule="evenodd" />
+                        <path fillRule="evenodd" d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7 0a.75.75 0 01.75-.75h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75h-1.5a.75.75 0 01-.75-.75V5.25z" clipRule="evenodd" />
                       </svg>
                     ) : (
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-12 h-12">
@@ -796,10 +787,9 @@ export default function ServiceShowcase() {
                     max={videoDuration || 0}
                     value={videoCurrentTime}
                     onChange={handleVideoSeek}
-                    className="video-seekbar"
-                    aria-label="Video progress"
+                    className="w-full h-1 bg-gray-300/50 rounded-lg appearance-none cursor-pointer accent-white"
                     style={{
-                      backgroundSize: `${(videoCurrentTime / (videoDuration || 1)) * 100}% 100%`
+                      backgroundImage: `linear-gradient(to right, white ${(videoCurrentTime / (videoDuration || 1)) * 100}%, transparent ${(videoCurrentTime / (videoDuration || 1)) * 100}%)`
                     }}
                   />
                   
@@ -812,14 +802,7 @@ export default function ServiceShowcase() {
               </div>
             </div>
 
-            <div className="text-center">
-              <Link 
-                href="/create-resume" 
-                className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
-              >
-                Join our Waitlist
-              </Link>
-            </div>
+            {renderWaitlistButton()}
           </motion.div>
         );
 
@@ -877,14 +860,7 @@ export default function ServiceShowcase() {
               </div>
             </div>
             
-            <div className="text-center">
-              <Link 
-                href="/industry-updates" 
-                className="inline-flex items-center justify-center bg-[#FF9E44] text-black font-bold px-8 py-3 rounded-full text-lg hover:bg-[#FF9E44]/90 transition-colors"
-              >
-                Join our Waitlist
-              </Link>
-            </div>
+            {renderWaitlistButton()}
           </motion.div>
         );
 
@@ -926,6 +902,7 @@ export default function ServiceShowcase() {
 
           {/* Content Section */}
           {renderActiveSection()}
+          <FormPopup isOpen={isModalOpen} onClose={handleModalClose} />
         </motion.div>
       </div>
     </section>

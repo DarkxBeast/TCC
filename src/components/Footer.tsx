@@ -37,9 +37,13 @@ export default function Footer() {
             </motion.h2>
           </div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link
+                  href="/coming-soon"
+                >
             <Button className="bg-[#FF9E44] hover:bg-[#FF9E44]/90 text-white rounded-full px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-medium w-auto h-12">
               Build your Profile
             </Button>
+            </Link>
           </motion.div>
         </div>
 
@@ -263,7 +267,7 @@ scroll-smooth"
                 </motion.li>
                 <motion.li variants={linkVariants} whileHover="hover">
                   <Link
-                    href="/join-our-team"
+                    href="/coming-soon"
                     className="text-white/80 hover:text-white transition-colors inline-block relative after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-[#FF9E44] after:left-0 after:-bottom-1 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left"
                   >
                     Join our Team

@@ -82,33 +82,32 @@ export default function Header() {
   }, [isScrolled, controls, screenWidth]);
 
   const companyOptions = [
-    { title: "Post a Job", href: "/post-job" },
-    { title: "Post a Project", href: "/post-project" },
-    { title: "Explore Schools", href: "#", hasSubmenu: true },
-    { title: "Compare Institutions", href: "/compare-institutions" },
-    { title: "Find right talent for me", href: "/find-talent" },
+    { title: "Post a Job", href: "/coming-soon" },
+    { title: "Post a Project", href: "/coming-soon" },
+    { title: "Explore Schools", href: "/coming-soon", hasSubmenu: true },
+    { title: "Compare Institutions", href: "/coming-soon" },
+    { title: "Find right talent for me", href: "/coming-soon" },
   ];
 
   const exploreSchoolsOptions = [
-    { title: "Explore B Schools", href: "/explore-b-schools" },
-    { title: "Explore T Schools", href: "/explore-t-schools" },
-    { title: "Explore Universities", href: "/explore-universities" },
+    { title: "Explore B Schools", href: "/coming-soon" },
+    { title: "Explore T Schools", href: "/coming-soon" },
+    { title: "Explore Universities", href: "/coming-soon" },
   ];
 
   const institutionOptions = [
-    { title: "Partner with us", href: "/institution-partner" },
-    { title: "Campus ambassador", href: "/campus-ambassador" },
-    { title: "Placement support", href: "/placement-support" },
-    { title: "Hire our students", href: "/hire-students" },
+    { title: "Partner with us", href: "/coming-soon" },
+    { title: "Campus ambassador", href: "/coming-soon" },
+    { title: "Placement support", href: "/coming-soon" },
+    { title: "Hire our students", href: "/coming-soon" },
   ];
 
   const studentOptions = [
-    { title: "Find Courses", href: "/courses" },
-    { title: "Find Jobs & Internships", href: "/jobs" },
-    { title: "Find Projects", href: "/projects" },
-    { title: "Find Mentors", href: "/mentors" },
-    { title: "Build Resume", href: "/resume" },
-    { title: "Industry Updates", href: "/updates" },
+    { title: "Find Courses", href: "/coming-soon" },
+    { title: "Find Jobs & Internships", href: "/coming-soon" },
+    { title: "Find Projects", href: "/coming-soon" },
+    { title: "Find Mentors", href: "/coming-soon" },
+    { title: "Build Resume", href: "/coming-soon" },
   ];
 
   return (
@@ -249,7 +248,7 @@ export default function Header() {
             </li>
             <li>
               <Link
-                href="#"
+                href="/coming-soon"
                 className="text-[15px] font-medium bg-[#FF9E44] hover:bg-[#ff9431] text-white px-6 py-2 rounded-full transition-colors"
               >
                 Login
@@ -410,7 +409,7 @@ export default function Header() {
 
           <div>
             <Link
-              href="#"
+              href="/coming-soon"
               className="inline-block text-[15px] font-medium bg-[#FF9E44] hover:bg-[#ff9431] text-white px-6 py-2 rounded-full transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >

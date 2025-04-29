@@ -39,6 +39,15 @@ export default function AboutUs() {
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // Handle seekbar interaction
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+    const time = parseFloat(e.target.value);
+    video.currentTime = time;
+    setCurrentTime(time);
+  };
+
   // Update time state when video time changes
   useEffect(() => {
     const video = videoRef.current;
@@ -56,21 +65,17 @@ export default function AboutUs() {
     video.addEventListener('loadedmetadata', updateDuration);
     video.addEventListener('durationchange', updateDuration);
 
+    // Initialize duration when component mounts
+    if (video.duration && !isNaN(video.duration)) {
+      setDuration(video.duration);
+    }
+
     return () => {
-      // Clean up event listeners
       video.removeEventListener('timeupdate', updateTime);
       video.removeEventListener('loadedmetadata', updateDuration);
       video.removeEventListener('durationchange', updateDuration);
     };
-  }, [videoRef]);
-
-  // Handle seekbar interaction
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!videoRef.current) return;
-    const seekTime = parseFloat(e.target.value);
-    videoRef.current.currentTime = seekTime;
-    setCurrentTime(seekTime);
-  };
+  }, []);
 
   return (
     <section id="about-us" className="w-full py-16 md:py-24 bg-white">
@@ -163,7 +168,7 @@ export default function AboutUs() {
               </div>
             </div>
 
-            {/* Custom video controls overlay */}
+            {/* Video controls section */}
             <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
               {/* Seekbar */}
               <input
@@ -172,10 +177,9 @@ export default function AboutUs() {
                 max={duration || 0}
                 value={currentTime}
                 onChange={handleSeek}
-                className="video-seekbar"
-                aria-label="Video progress"
+                className="w-full h-1 bg-gray-300/50 rounded-lg appearance-none cursor-pointer accent-white"
                 style={{
-                  backgroundSize: `${(currentTime / (duration || 1)) * 100}% 100%`
+                  backgroundImage: `linear-gradient(to right, white ${(currentTime / (duration || 1)) * 100}%, transparent ${(currentTime / (duration || 1)) * 100}%)`
                 }}
               />
               

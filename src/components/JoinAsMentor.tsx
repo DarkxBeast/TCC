@@ -60,7 +60,24 @@ export default function JoinAsMentor() {
               transition={{ duration: 0.5, delay: 0.8 }}
               viewport={{ once: true }}
             >
-              If you&apos;re passionate about helping young people <br/> build their careers, we have the perfect opportunity <br/> for you. With just 20 minutes a week, you can make <br/> a real difference in someone&apos;s future. We provide <br/> the platform you need to give back to society and <br/> help shape the next generation of leaders. Join us <br/> today and be a part of something truly meaningful.
+              <span className="hidden lg:block">
+                If you&apos;re passionate about helping young people <br/> 
+                build their careers, we have the perfect opportunity <br/> 
+                for you. With just 20 minutes a week, you can make <br/> 
+                a real difference in someone&apos;s future. We provide <br/> 
+                the platform you need to give back to society and <br/> 
+                help shape the next generation of leaders. Join us <br/> 
+                today and be a part of something truly meaningful.
+              </span>
+              <span className="lg:hidden">
+                If you&apos;re passionate about helping young people 
+                build their careers, we have the perfect opportunity 
+                for you. With just 20 minutes a week, you can make 
+                a real difference in someone&apos;s future. We provide 
+                the platform you need to give back to society and 
+                help shape the next generation of leaders. Join us 
+                today and be a part of something truly meaningful.
+              </span>
             </motion.p>
           </div>
           

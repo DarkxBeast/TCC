@@ -4,6 +4,7 @@ import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
+import FormPopup from "./ui/form-popup";
 
 interface HeroProps {
   setFormSource: Dispatch<SetStateAction<"Institutions" | "Companies" | null>>;
@@ -155,7 +156,6 @@ export default function Hero({ setFormSource }: HeroProps) {
   ];
 
   const handleModalOpen = () => setIsModalOpen(true);
-  const handleModalClose = () => setIsModalOpen(false);
 
   // Start the animations when the component mounts
   useEffect(() => {
@@ -236,49 +236,6 @@ export default function Hero({ setFormSource }: HeroProps) {
       },
     });
   };
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [isModalOpen]);
-
-  useEffect(() => {
-    if (isModalOpen) {
-      const formContainer = document.getElementById("zf_div_rD9RNlQ9iFCQjN5Db4nsbnGxm_cTapujtYt6ZppwDHM");
-      if (formContainer) {
-        formContainer.innerHTML = ""; // Clear any existing content
-      }
-
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.innerHTML = `
-        (function() {
-          try {
-            var f = document.createElement("iframe");
-            f.src = 'https://forms.zohopublic.in/thecareercompany1/form/JoinourWaitlist/formperma/rD9RNlQ9iFCQjN5Db4nsbnGxm_cTapujtYt6ZppwDHM?zf_rszfm=1';
-            f.style.border = "none";
-            f.style.width = "100%";
-            f.style.height = "100%";
-            f.setAttribute("aria-label", 'Join our Waitlist');
-            var d = document.getElementById("zf_div_rD9RNlQ9iFCQjN5Db4nsbnGxm_cTapujtYt6ZppwDHM");
-            d.appendChild(f);
-          } catch (e) {}
-        })();
-      `;
-      document.body.appendChild(script);
-
-      return () => {
-        document.body.removeChild(script);
-      };
-    }
-  }, [isModalOpen]);
 
   // Render card component to reuse
   const renderCard = (card: Card, key: string) => (
@@ -521,27 +478,7 @@ export default function Hero({ setFormSource }: HeroProps) {
                 </div>
               )}
 
-              {isModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-3 sm:px-0">
-                  <div className="relative bg-white rounded-lg shadow-lg w-full max-w-[750px] h-[80vh] max-h-[90vh] flex flex-col overflow-hidden mt-4 sm:mt-8">
-                    {/* Close Button */}
-                    <button
-                      type="button"
-                      className="absolute top-2 right-2 sm:top-4 sm:right-4 text-black text-2xl font-bold z-10"
-                      onClick={handleModalClose}
-                      aria-label="Close"
-                    >
-                      &times;
-                    </button>
-                    {/* Zoho Form */}
-                    <div
-                      id="zf_div_rD9RNlQ9iFCQjN5Db4nsbnGxm_cTapujtYt6ZppwDHM"
-                      className="w-full h-full"
-                      style={{ overflow: "hidden" }}
-                    ></div>
-                  </div>
-                </div>
-              )}
+              <FormPopup isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
               {/* Contact Us Button */}
               {(activeTab === "Institutions" || activeTab === "Companies") && (
