@@ -99,7 +99,7 @@ export default function ServiceShowcase() {
   // Service categories
   const serviceCategories = [
     { id: 'mentorship', name: '1:1 Mentorship' },
-    { id: 'course', name: 'Course' },
+    { id: 'course', name: 'Courses' },
     { id: 'findYourself', name: 'Find Yourself' },
     { id: 'projects', name: 'Projects' },
     { id: 'jobs', name: 'Jobs & Internships' },
@@ -113,42 +113,48 @@ export default function ServiceShowcase() {
       id: 1,
       title: "Foundations of Digital Marketing and E-commerce",
       duration: "1-4 Weeks",
-      provider: "Beginner",
+      provider: "Harvard University",
+      level:"Beginner",
       icon: "/images/icons/Harvard.png"
     },
     {
       id: 2,
       title: "Google IT Automation with Python",
-      duration: "Beginner",
-      provider: "3-6 Months",
+      duration: "3-6 Months",
+      provider: "Google",
+      level: "Intermediate",
       icon: "/images/icons/Google.png"
     },
     {
       id: 3,
       title: "Project Execution : Running the Project",
-      duration: "Beginer",
-      provider: "1-3 Months",
+      duration: "1-3 Months",
+      provider: "IBM",
+      level: "Beginner",
       icon: "/images/icons/Ibm.png"
     },
     {
       id: 4,
       title: "Google Advanced Data Analytics",
-      duration: "Advanced",
-      provider: "3-6 Months",
+      duration: "3-6 Months",
+      provider: "Google",
+      level: "Advanced",
       icon: "/images/icons/Google.png"
     },
     {
       id: 5,
       title: "Entrepreneurship & Innovation in Business",
       duration: "2 Hrs",
-      provider: "ISB Hyderabad",
+      provider: "Harvard University",
+      level: "Beginner",
       icon: "/images/icons/Harvard.png"
     },
     {
       id: 6,
       title: "Foundations of Project Management",
       duration: "1-4 Weeks",
-      provider: "Beginner",
+      provider: "IBM",
+      level: "Beginner",
       icon: "/images/icons/Ibm.png"
     }
   ];
@@ -399,11 +405,11 @@ export default function ServiceShowcase() {
                 {courses.map((course) => (
                   <div
                     key={course.id}
-                    className="h-[200px] md:h-[180px] lg:h-[200px] rounded-lg overflow-hidden group cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105 bg-white border border-gray-100"
+                    className="h-[200px] md:h-[180px] lg:h-[200px] rounded-lg overflow-hidden group cursor-pointer shadow-lg transition-transform duration-300 hover:scale-105 bg-white border border-gray-100 relative"
                   >
-                    <div className="p-4 h-full flex flex-col justify-between">
-                      <div className="flex items-start mb-1">
-                        {/* Course icon/image */}
+                    <div className="p-4 h-full flex flex-col">
+                      {/* Provider and icon container */}
+                      <div className="flex items-center mb-3">
                         <div className="relative w-10 h-10 bg-gray-100 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden">
                           <Image
                             src={course.icon}
@@ -413,41 +419,40 @@ export default function ServiceShowcase() {
                             className="object-contain"
                           />
                         </div>
+                        <p className="ml-3 text-sm font-bold text-gray-700">{course.provider}</p>
+                      </div>
 
-                        {/* Course title and tags */}
-                        <div className="ml-4 flex-grow">
-                          <h3 className="text-lg font-semibold text-gray-800 mb-1">{course.title}</h3>
-                          <div className="flex flex-wrap gap-2">
-                            {course.title.toLowerCase().includes('management') && (
-                              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Management</span>
-                            )}
-                            {course.title.toLowerCase().includes('python') && (
-                              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Python</span>
-                            )}
-                            {course.title.toLowerCase().includes('Automation') && (
-                              <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Automation</span>
-                            )}
-                            {course.title.toLowerCase().includes('leadership') && (
-                              <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Leadership</span>
-                            )}
-                            {course.title.toLowerCase().includes('analytics') && (
-                              <span className="px-3 py-1 bg-green-50 text-green-700 text-xs rounded-full">Analytics</span>
-                            )}
-                            {course.title.toLowerCase().includes('entrepreneurship') && (
-                              <span className="px-3 py-1 bg-orange-50 text-orange-700 text-xs rounded-full">Entrepreneurship</span>
-                            )}
-                            {course.title.toLowerCase().includes('marketing') && (
-                              <span className="px-3 py-1 bg-pink-50 text-pink-700 text-xs rounded-full">Marketing</span>
-                            )}
-                          </div>
+                      {/* Title and tags container */}
+                      <div className="flex-grow">
+                        <h3 className="text-lg font-semibold text-gray-800 mb-2">{course.title}</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {course.title.toLowerCase().includes('management') && (
+                            <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Management</span>
+                          )}
+                          {course.title.toLowerCase().includes('python') && (
+                            <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Python</span>
+                          )}
+                          {course.title.toLowerCase().includes('automation') && (
+                            <span className="px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">Automation</span>
+                          )}
+                          {course.title.toLowerCase().includes('leadership') && (
+                            <span className="px-3 py-1 bg-purple-50 text-purple-700 text-xs rounded-full">Leadership</span>
+                          )}
+                          {course.title.toLowerCase().includes('analytics') && (
+                            <span className="px-3 py-1 bg-green-50 text-green-700 text-xs rounded-full">Analytics</span>
+                          )}
+                          {course.title.toLowerCase().includes('entrepreneurship') && (
+                            <span className="px-3 py-1 bg-orange-50 text-orange-700 text-xs rounded-full">Entrepreneurship</span>
+                          )}
+                          {course.title.toLowerCase().includes('marketing') && (
+                            <span className="px-3 py-1 bg-pink-50 text-pink-700 text-xs rounded-full">Marketing</span>
+                          )}
                         </div>
                       </div>
 
-                      <div className="flex justify-between items-end mt-auto">
-                        {/* Provider name aligned to the left */}
-                        <p className="text-sm font-bold text-gray-700">{course.provider}</p>
-
-                        {/* Duration */}
+                      {/* Footer with level and duration */}
+                      <div className="flex justify-between items-center mt-auto pt-2">
+                        <p className="text-sm font-bold text-gray-700">{course.level}</p>
                         <div className="flex items-center">
                           <Image
                             src="/images/svgs/time.svg"
@@ -461,8 +466,8 @@ export default function ServiceShowcase() {
                       </div>
                     </div>
 
-                    {/* Call to action overlay on hover */}
-                    <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                    {/* Hover overlay */}
+                    <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <span className="text-white font-bold">View Course</span>
                     </div>
                   </div>

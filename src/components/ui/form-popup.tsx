@@ -37,6 +37,8 @@ export default function FormPopup({ isOpen, onClose }: FormPopupProps) {
               f.style.border = "none";
               f.style.width = "100%";
               f.style.height = "100%";
+              f.style.minHeight = "600px";
+              f.style.overflow = "hidden";
               f.setAttribute("aria-label", 'Join our Waitlist');
               var d = document.getElementById("zf_div_rD9RNlQ9iFCQjN5Db4nsbnGxm_cTapujtYt6ZppwDHM");
               d.appendChild(f);
@@ -65,7 +67,7 @@ export default function FormPopup({ isOpen, onClose }: FormPopupProps) {
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
-            className="relative bg-white rounded-lg shadow-lg w-full max-w-[750px] h-[80vh] max-h-[90vh] flex flex-col overflow-hidden mt-4 sm:mt-8"
+            className="relative bg-white rounded-lg shadow-lg w-full max-w-[600px] h-[88vh] mt-24 flex flex-col overflow-hidden"
           >
             {/* Close Button */}
             <button

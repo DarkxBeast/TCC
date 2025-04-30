@@ -43,17 +43,10 @@ export default function SuccessStories() {
     },
     {
       id: 6,
-      name: "Akanksha Sherawat",
-      role: "IIM-Kozhikode",
-      quote: "I have learnt about different techniques and approaches of Excel which I can further use in my future. The mentor was good and had the ability to engage students in the activities",
+      name: "Divyaraj Chauhan",
+      role: "Lateral Placement",
+      quote: "The Career Company believed in me when I had no experience and offered me an internship at Meriq Enterprises. This opportunity is helping me gain real skills and confidence in the B2B space. I'm truly thankful for their trust and support. It’s been a game-changer in my career journey.",
       image: "/images/testimonials/T2.png"
-    },
-    {
-      id: 7,
-      name: "Kanika Bhardwaj",
-      role: "IIM-Indore",
-      quote: "New topics were taught in the session, and we had practice questions for each topic which helped us understand them easily. The speaker made the session interactive and cleared every doubt we had during the session.",
-      image: "/images/testimonials/T3.png"
     }
   ];
 
