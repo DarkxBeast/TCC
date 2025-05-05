@@ -283,8 +283,23 @@ export default function Hero({ setFormSource }: HeroProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.2 }}
-      className="w-full bg-white relative overflow-hidden mt-16"
+      className="w-full relative overflow-hidden pt-24"
     >
+      {/* Video Background */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="object-cover w-full h-full"
+          style={{ filter: 'brightness(0.9)' }}
+        >
+          <source src="/videos/TCC_Herosection_video.mp4" type="video/mp4" />
+        </video>
+        
+      </div>
+
       <motion.div
         initial={{ y: 40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -292,7 +307,7 @@ export default function Hero({ setFormSource }: HeroProps) {
           duration: 1,
           ease: [0.22, 1, 0.36, 1],
         }}
-        className="max-w-[1440px] mx-auto px-4 pt-6 md:pt-24 pb-12 md:pb-32 flex flex-col items-center"
+        className="relative z-10 max-w-[1440px] mx-auto px-4 pt-6 md:pt-24 pb-12 md:pb-32 flex flex-col items-center"
       >
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
@@ -301,7 +316,7 @@ export default function Hero({ setFormSource }: HeroProps) {
             duration: 0.8,
             ease: [0.11, 0.95, 0.32, 1],
           }}
-          className="text-[28px] sm:text-[36px] md:text-[56px] font-bold text-left sm:text-center leading-tight text-[#1A1A1A] mb-3 md:mb-6 max-w-[1200px] px-2 sm:px-4"
+          className="text-[28px] sm:text-[36px] md:text-[56px] font-bold text-left sm:text-center leading-tight text-white mb-3 md:mb-6 max-w-[1200px] px-2 sm:px-4"
         >
           We help you build more{" "}
           <span className="text-[#FF9E44] text-[34px] sm:text-[42px] md:text-[64px] font-extrabold relative inline-block">
@@ -317,7 +332,7 @@ export default function Hero({ setFormSource }: HeroProps) {
             delay: 0.3,
             ease: [0.11, 0.95, 0.32, 1],
           }}
-          className="text-sm sm:text-base md:text-lg text-[#666666] text-left sm:text-center max-w-[800px] mb-6 md:mb-16 px-2 sm:px-4"
+          className="text-sm sm:text-base md:text-lg text-white text-left sm:text-center max-w-[800px] mb-6 md:mb-16 px-2 sm:px-4"
         >
           We help students and working professionals reach their ideal role
           faster with clarity. Help institutions accelerate their placements and provide
@@ -338,51 +353,51 @@ export default function Hero({ setFormSource }: HeroProps) {
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[95%] md:w-[1400px] h-[180px] sm:h-[214px] bg-black rounded-2xl"></div>
 
           {/* White box */}
-          <div className="relative w-full max-w-[1230px] h-auto md:h-[548px] bg-white rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] p-2 z-10 overflow-hidden">
+          <div className="relative w-full max-w-[1230px] h-auto md:h-[548px] bg-transparent backdrop-blur rounded-2xl shadow-[0_4px_12px_rgba(0,0,0,0.08)] p-2 z-10 overflow-hidden">
             <div className="flex justify-center pt-4 md:pt-8 pb-2 md:pb-6 relative">
               <div className="flex flex-row w-full md:w-auto px-2 sm:px-4 space-y-0 space-x-2 md:space-x-12 items-end justify-start md:justify-center overflow-x-auto snap-x scrollbar-hide">
                 <button
                   type="button"
                   className={`text-sm md:text-lg font-medium px-2 sm:px-3 md:px-6 py-2 md:py-3 transition-colors relative flex-shrink-0 snap-start min-w-[145px] sm:min-w-0 ${activeTab === "Students"
-                    ? "text-[#FF9E44]"
-                    : "text-[#666666] hover:text-[#333333]"
+                    ? "text-white"
+                    : "text-white hover:text-[#FF9E44]"
                     }`}
                   onClick={() => setActiveTab("Students")}
                 >
                   <span className="relative whitespace-normal sm:whitespace-nowrap text-center max-w-[120px] sm:max-w-none">
                     For Students <br className="sm:hidden" />& Professionals
                     {activeTab === "Students" && (
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-[110%] h-0.5 bg-[#FF9E44] rounded-full" />
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-[110%] h-1 bg-[#FF9E44] rounded-full" />
                     )}
                   </span>
                 </button>
                 <button
                   type="button"
                   className={`text-sm md:text-lg font-medium px-2 sm:px-3 md:px-6 py-2 md:py-3 transition-colors relative flex-shrink-0 snap-start min-w-[120px] sm:min-w-0 ${activeTab === "Institutions"
-                    ? "text-[#FF9E44]"
-                    : "text-[#666666] hover:text-[#333333]"
+                    ? "text-white"
+                    : "text-white hover:text-[#FF9E44]"
                     }`}
                   onClick={() => setActiveTab("Institutions")}
                 >
                   <span className="relative whitespace-nowrap">
                     For Institutions
                     {activeTab === "Institutions" && (
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-[110%] h-0.5 bg-[#FF9E44] rounded-full" />
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-[110%] h-1 bg-[#FF9E44] rounded-full" />
                     )}
                   </span>
                 </button>
                 <button
                   type="button"
                   className={`text-sm md:text-lg font-medium px-2 sm:px-3 md:px-6 py-2 md:py-3 transition-colors relative flex-shrink-0 snap-start min-w-[120px] sm:min-w-0 ${activeTab === "Companies"
-                    ? "text-[#FF9E44]"
-                    : "text-[#666666] hover:text-[#333333]"
+                    ? "text-white"
+                    : "text-white hover:text-[#FF9E44]"
                     }`}
                   onClick={() => setActiveTab("Companies")}
                 >
                   <span className="relative whitespace-nowrap">
                     For Companies
                     {activeTab === "Companies" && (
-                      <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-[110%] h-0.5 bg-[#FF9E44] rounded-full" />
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-[110%] h-1 bg-[#FF9E44] rounded-full" />
                     )}
                   </span>
                 </button>

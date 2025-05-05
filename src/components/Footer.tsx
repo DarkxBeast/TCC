@@ -216,7 +216,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="bg-black text-white py-6 px-6 md:px-32 flex flex-col md:flex-row gap-6 md:gap-0 justify-center md:justify-between items-center mt-auto">
-          <div>©The Career Company</div>
+          <div>© 2023 CAREERSAGE CONSULTANTS PRIVATE LIMITED</div>
         </div>
       </div>
     </footer>

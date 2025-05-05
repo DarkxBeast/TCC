@@ -11,14 +11,14 @@ export default function SuccessStories() {
       name: "Milan Barot",
       role: "PSE Advisory Pvt. Ltd.",
       quote: "The Career Company came into my life as a turning point. They took the time to understand my strengths and aspirations, helped me rebuild my resume, and guided me towards a career path that matched my potential. With their support, I successfully transitioned into a new role, gaining valuable skills and a 50% salary hike in just 8 months. I highly recommend them to anyone seeking meaningful career growth.",
-      image: "/images/testimonials/T4.png"
+      image: "/images/testimonials/Milan.jpg"
     },
     {
       id: 2,
       name: "Harshita Yadav",
       role: "IIM-Sambalpur",
       quote: "From the start of my journey, your guidance has played a key role in helping me bridge the gap between classroom learning and real-world experience. Thanks to The Career Company, the exposure I’ve gained especially through my current internship has added so much value to my understanding of marketing and given me the confidence.",
-      image: "/images/testimonials/T5.png"
+      image: "/images/testimonials/Harshitha.jpg"
     },
     {
       id: 3,
@@ -39,14 +39,14 @@ export default function SuccessStories() {
       name: "Ananya Yadav",
       role: "Jio Institute",
       quote: "The mentors patiently addressed all my doubts and queries, and took the time to analyse my resume in detail — offering tailored feedback and preparation strategies specific to my profile, rather than a generalized approach.",
-      image: "/images/testimonials/T1.png"
+      image: "/images/testimonials/Ananya.jpeg"
     },
     {
       id: 6,
       name: "Divyaraj Chauhan",
       role: "Lateral Placement",
       quote: "The Career Company believed in me when I had no experience and offered me an internship at Meriq Enterprises. This opportunity is helping me gain real skills and confidence in the B2B space. I'm truly thankful for their trust and support. It’s been a game-changer in my career journey.",
-      image: "/images/testimonials/T2.png"
+      image: "/images/testimonials/Divyaraj.jpg"
     }
   ];
 

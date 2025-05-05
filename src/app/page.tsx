@@ -20,7 +20,7 @@ export default function Home() {
   const [formSource, setFormSource] = useState<"Institutions" | "Companies" | null>(null);
 
   return (
-    <div className="min-h-screen">
+    <div className="">
       {/* Hero Section */}
       <Hero setFormSource={setFormSource} />
 
