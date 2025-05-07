@@ -228,42 +228,42 @@ export default function ServiceShowcase() {
     {
       id: 1,
       title: "Supply Chain Optimization for E-Commerce",
-      people: "12 Enrolled",
+      people: "12 Applied",
       duration: "Estimated: 5 days",
       icon: "/images/icons/p1.png"
     },
     {
       id: 2,
       title: "Digital Marketing Campaign Analysis",
-      people: "8 Enrolled",
+      people: "8 Applied",
       duration: "Estimated: 3 weeks",
       icon: "/images/icons/p2.png"
     },
     {
       id: 3,
       title: "Customer Experience Improvement Strategy",
-      people: "10 Enrolled",
+      people: "10 Applied",
       duration: "Estimated: 4 weeks",
       icon: "/images/icons/p3.png"
     },
     {
       id: 4,
       title: "Business Process Automation using AI",
-      people: "5 Enrolled",
+      people: "5 Applied",
       duration: "Estimated: 2 weeks",
       icon: "/images/icons/p4.png"
     },
     {
       id: 5,
       title: "Sustainability and ESG Reporting Framework",
-      people: "15 Enrolled",
+      people: "15 Applied",
       duration: "Estimated: 6 weeks",
       icon: "/images/icons/p5.png"
     },
     {
       id: 6,
       title: "Risk Management and Mitigation Strategy",
-      people: "3 Enrolled",
+      people: "3 Applied",
       duration: "Estimated: 4 weeks",
       icon: "/images/icons/p6.png"
     }

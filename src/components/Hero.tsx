@@ -294,6 +294,7 @@ export default function Hero({ setFormSource }: HeroProps) {
           playsInline
           className="object-cover w-full h-full"
           style={{ filter: 'brightness(0.9)' }}
+          suppressHydrationWarning
         >
           <source src="/videos/TCC_Herosection_video.mp4" type="video/mp4" />
         </video>

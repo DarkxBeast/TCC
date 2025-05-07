@@ -20,6 +20,7 @@ export default function JoinAsMentor() {
           <div className="absolute top-0 left-0 w-[300px] h-[300px] rounded-full border border-gray-800 -translate-x-1/2 -translate-y-1/2 z-0"></div>
           
           <div className="relative z-10">
+            <div className="flex flex-col">
             <motion.h2 
               className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 lg:mb-12 leading-tight"
               initial={{ y: 20, opacity: 0 }}
@@ -29,6 +30,20 @@ export default function JoinAsMentor() {
             >
               Join us as<br />Mentor
             </motion.h2>
+
+            <motion.p 
+              className="text-lg lg:text-xl mb-12 lg:mb-20"
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <span>
+              Be the person you wish had been there for you,<br/>
+              when you were younger.
+              </span>
+            </motion.p>
+            </div>
             
             <motion.p 
               className="text-lg lg:text-xl mb-12 lg:mb-20"

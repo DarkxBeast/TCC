@@ -140,13 +140,14 @@ export default function AboutUs() {
             <video
               ref={videoRef}
               className="w-full h-full object-cover"
+              poster="/images/about-us-cover.png"
               playsInline
               preload="metadata"
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               suppressHydrationWarning
             >
-              <source src="/videos/career-company.mp4" type="video/mp4" />
+              <source src="/videos/career-company.mp4" type="video/mp4"/>
               Your browser does not support the video tag.
             </video>
             
